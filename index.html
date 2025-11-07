@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Eco Connect - 학생용 친환경 커뮤니티</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Leaflet (지도) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Chart.js (그래프) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Eco Connect</div>
+
+  <div class="controls">
+    <span id="userLabel"></span>
+    <button id="loginBtn">로그인</button>
+    <button id="modeToggle">다크모드</button>
+  </div>
+</header>
+
+<nav class="nav">
+  <button data-page="home" class="nav-btn active">홈</button>
+  <button data-page="community" class="nav-btn">커뮤니티</button>
+  <button data-page="map" class="nav-btn">지도</button>
+  <button data-page="carbon" class="nav-btn">탄소기록</button>
+  <button data-page="mypage" class="nav-btn">마이페이지</button>
+</nav>
+
+<main class="container">
+  <!-- HOME -->
+  <section id="home" class="page active">
+    <h1>환영합니다 — Eco Connect</h1>
+    <p>지역 기반 환경 이슈 공유, 탄소 기록, 실천 인증까지 한 곳에서.</p>
+
+    <div class="card">
+      <h3>오늘의 실천</h3>
+      <button id="actionBtn">추천 받기</button>
+      <div id="actionBox" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h3>간단 탄소 계산</h3>
+      <div class="inline">
+        <label>하루 대중교통(분)</label>
+        <input id="calc_bus" type="number" min="0" placeholder="예: 20">
+      </div>
+      <div class="inline">
+        <label>하루 전기(kWh)</label>
+        <input id="calc_elec" type="number" min="0" placeholder="예: 8">
+      </div>
+      <button id="calcBtn">계산</button>
+      <div id="calcResult" class="result"></div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section id="community" class="page">
+    <h2>커뮤니티</h2>
+
+    <div class="card">
+      <div class="inline">
+        <select id="postCategory">
+          <option value="일반">일반</option>
+          <option value="질문">질문</option>
+          <option value="실천">실천기록</option>
+          <option value="지역">지역이슈</option>
+        </select>
+        <input id="postTitle" placeholder="제목 (선택)">
+      </div>
+      <textarea id="postText" placeholder="내용 입력... (최대 1000자)"></textarea>
+
+      <div class="inline">
+        <input id="postImage" type="file" accept="image/*">
+        <input id="postFile" type="file" accept=".pdf,.hwp,.txt">
+      </div>
+
+      <div class="inline">
+        <select id="postRegion">
+          <option value="">지역(선택)</option>
+          <option>서울</option><option>경기</option><option>인천</option>
+          <option>부산</option><option>대구</option><option>광주</option>
+          <option>대전</option><option>울산</option><option>세종</option>
+          <option>강원</option><option>충북</option><option>충남</option>
+          <option>전북</option><option>전남</option><option>경북</option>
+          <option>경남</option><option>제주</option>
+        </select>
+
+        <select id="sortSelect">
+          <option value="new">최신순</option>
+          <option value="like">좋아요순</option>
+        </select>
+
+        <button id="postBtn">게시</button>
+      </div>
+    </div>
+
+    <div id="postList" class="card-list"></div>
+  </section>
+
+  <!-- MAP -->
+  <section id="map" class="page">
+    <h2>지도(활동 표시)</h2>
+    <div id="mapBox" class="card">
+      <div id="map" style="height:360px;"></div>
+    </div>
+    <p class="muted">지도의 마커는 사용자가 게시글에 지역을 선택하면 자동으로 추가됩니다.</p>
+  </section>
+
+  <!-- CARBON -->
+  <section id="carbon" class="page">
+    <h2>탄소발자국 기록 & 통계</h2>
+    <div class="card">
+      <input id="carbonVal" type="number" placeholder="오늘 절감한(또는 배출) kg CO₂" />
+      <button id="carbonAdd">기록 저장</button>
+    </div>
+
+    <div class="card">
+      <h4>최근 기록</h4>
+      <canvas id="carbonChart" width="400" height="180"></canvas>
+    </div>
+  </section>
+
+  <!-- MYPAGE -->
+  <section id="mypage" class="page">
+    <h2>마이페이지</h2>
+    <div class="card">
+      <label>닉네임</label>
+      <input id="nickname" placeholder="닉네임 설정(익명 가능)" />
+      <button id="saveNick">저장</button>
+      <div id="userBadges"></div>
+    </div>
+
+    <div class="card">
+      <h4>내 글</h4>
+      <div id="myPosts"></div>
+    </div>
+
+    <div class="card">
+      <h4>업로드 파일</h4>
+      <div id="myFiles"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  © Eco Connect — 학교 과제용 데모
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
